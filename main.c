@@ -1,5 +1,5 @@
 /* You probably want to keep these headers */
-#include <stdboo.h>
+#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 
@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-def interpret_run(char* code) {
+void interpret_run(char* code) {
   short pc = 0;
   short maximum_memory = 1024;
   uint8_t inp;
@@ -20,39 +20,39 @@ def interpret_run(char* code) {
   uint8_t memory[maximum_memory];
   uint16_t pointer = 0;
   
-  char pc_char = "";
+  char pc_char;
   while(pc < code.length()) {
     pc_char = code[pc];
     switch pc_char{
-      case "+":
+      case '+':
         memory[pointer]++;
         pc++;
         break;
-      case "-":
+      case '-':
         memory[pointer]--;
         pc++;
         break;
-      case ">":
+      case '>':
         pointer++;
         pc++;
         break;
-      case "<":
+      case '<':
         pointer--;
         pc++;
         break;
-      case ".":
+      case '.':
         printf("%d", memory[pointer]); //Print this as an ASCII character in the future
         pc++;
         break;
-      case ",":
+      case ',':
         scanf("Input:%u", &inp); // 
         memory[pointer] = inp;
         pc++;
         break;
-      case "[": //Not Implemented yet
+      case '[': //Not Implemented yet
         pc++;
         break;
-      case "]"://Not Implemented yet
+      case ']'://Not Implemented yet
         pc++;
         break;
     }
