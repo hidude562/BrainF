@@ -63,8 +63,8 @@ class Execution {
             case 3 -> {if(simulate)memory.ram[memory.pointer]--;} // TODO implement this to be as if it were unsigned
             case 4 -> {if(simulate)memory.pointer--;}
             case 5 -> {if(simulate)memory.pointer++;}
-            case 6 -> {if(simulate)System.out.print((char) memory.pointer_mem_contents);}
-            case 7 -> {if(simulate) {Scanner input = new Scanner(System.in); System.out.print("?:"); memory.ram[memory.pointer] = input.nextShort();}}
+            case 6 -> {if(simulate)System.out.print((char) memory.pointer_mem_contents);} // (char) memory.pointer_mem_contents
+            case 7 -> {if(simulate) {Scanner input = new Scanner(System.in); System.out.print("?:"); memory.ram[memory.pointer] = (byte) input.next().charAt(0);}}
 
         }
         memory.pc++;
@@ -80,19 +80,23 @@ class Execution {
         // Parse the BrainF code to an array of ints
         this.code_length = 0;
         this.code = new byte[code.length()];
+        int parsed_code_index = 0;
         for(int i = 0; i < code.length(); i++) {
             if (convert_char_to_id(code.charAt(i)) != 8) {
-                code_length++;
-                this.code[i] = convert_char_to_id(code.charAt(i));
+                this.code_length++;
+                this.code[parsed_code_index] = convert_char_to_id(code.charAt(i));
+                parsed_code_index++;
             }
         }
+        // TODO: Implement the ram_word_width variable
         memory = new Memory(4096, 256);
     }
 }
 
 class BrainF {
     public static void main(String[] args) {
-        Execution program = new Execution("");
+        // Hello world program as the code for the execution (program from copy.sh)
+        Execution program = new Execution("++++++++++[>+>+++>+++++++>++++++++++<<<<-]>>>++.>+.+++++++..+++.<<++.>+++++++++++++++.>.+++.------.--------.<<+.<.");
         program.execute_program();
     }
 }
